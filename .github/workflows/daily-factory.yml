@@ -1,0 +1,46 @@
+name: Daily Game Factory
+
+on:
+  schedule:
+    # Runs at 10:00 AM Nigeria Time (9:00 AM UTC) daily
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  create-games:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Run Game Factory
+      run: |
+        echo "🎮 DEATHROLL GAME FACTORY"
+        echo "=========================="
+        echo "GitHub: fadeleke246-tech0"
+        echo "Email: favouradeleke246@gmail.com"
+        echo "Time: $(date)"
+        echo ""
+        
+        # Run the factory
+        python factory.py
+        
+        echo ""
+        echo "✅ Factory run complete!"
+        echo "📧 Contact: favouradeleke246@gmail.com"
+    
+    - name: Commit and push games
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "🎮 Daily Factory Run: $(date +'%Y-%m-%d')" || echo "No changes"
+        git push
