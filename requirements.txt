@@ -1,0 +1,2 @@
+# Deathroll Game Factory
+# No external dependencies needed
